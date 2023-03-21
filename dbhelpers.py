@@ -23,7 +23,7 @@ def disconnect_db(cursor):
     try:
         conn = cursor.connection
         cursor.close()
-        conn.close
+        conn.close()
         print("Connection was dropped")
     except mariadb.OperationalError as e:
         print("OPERATIONAL ERROR", e)
