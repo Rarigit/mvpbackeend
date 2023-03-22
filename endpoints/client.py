@@ -10,7 +10,7 @@ import bcrypt
 #Tested
 @app.get('/api/clients')
 def get_client():
-    keys = ['username', 'first_name', 'last_name', 'email', 'client_id']
+    keys = ['id', 'email', 'first_name', 'last_name', 'username']
     token_input = request.headers.get("token")
     result = run_statement("CALL get_clients_tkarg(?)", [token_input])
     client_alpha = []

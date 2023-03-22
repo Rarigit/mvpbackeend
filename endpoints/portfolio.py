@@ -21,15 +21,15 @@ def get_portfolio():
 
 @app.post('/api/portfolio')
 def insert_portfolio():
-    required_data = ['clientId', 'name', 'purchasePrice', 'quantity', 'clientEmail']
-    check_result = check_data(request.json, required_data)
-    if check_result != None:
-        return check_result
+    # required_data = ['clientId', 'name', 'purchasePrice', 'quantity']
+    # check_result = check_data(request.json, required_data)
+    # if check_result != None:
+    #     return check_result
     client_id_input = request.json.get('clientId')
     name_input = request.json.get('name')
     purchase_price = request.json.get('purchasePrice')
     result_verify = run_statement("CALL check_purc_price(?,?)", [name_input, purchase_price])
-    if result_verify[0][0] == 1:
+    if result_verify[0][0] == 2:
         quantity_input = request.json.get('quantity')
         client_email_input = request.json.get('clientEmail')
         result = run_statement("CALL insert_folio_data(?,?,?,?,?)", [client_id_input, name_input, quantity_input, purchase_price, client_email_input])
