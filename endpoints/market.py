@@ -34,16 +34,16 @@ def make_market():
         name_value_eth = data.get('nameEth')
         total_supply_value_eth = data.get('total_supplyEth')
         total_volume_value_eth = data.get('total_volumeEth')
-        #Adding the USDT parameters
-        image_value_usdt = data.get('imageUsdt')
-        ath_value_usdt = data.get('athUsdt')
-        atl_value_usdt= data.get('atlUsdt')
-        cur_price_value_usdt = data.get('current_priceUsdt')
-        market_cap_value_usdt = data.get('market_capUsdt')
-        market_cap_rank_value_usdt = data.get('market_cap_rankUsdt')
-        name_value_usdt = data.get('nameUsdt')
-        total_supply_value_usdt = data.get('total_supplyUsdt')
-        total_volume_value_usdt = data.get('total_volumeUsdt')
+        #Adding the LINK parameters
+        image_value_link = data.get('imageLink')
+        ath_value_link = data.get('athLink')
+        atl_value_link= data.get('atlLink')
+        cur_price_value_link = data.get('current_priceLink')
+        market_cap_value_link = data.get('market_capLink')
+        market_cap_rank_value_link = data.get('market_cap_rankLink')
+        name_value_link = data.get('nameLink')
+        total_supply_value_link = data.get('total_supplyLink')
+        total_volume_value_link = data.get('total_volumeLink')
         #Adding the BNB parameters
         image_value_bnb = data.get('imageBnb')
         ath_value_bnb = data.get('athBnb')
@@ -116,7 +116,7 @@ def make_market():
         total_volume_value_dot = data.get('total_volumeDot')
         result = run_statement("CALL test_insert_data_from_gecko(?,?,?,?,?,?,?,?,?)", [image_value, ath_value, atl_value, cur_price_value, market_cap_value, market_cap_rank_value, name_value, total_supply_value, total_volume_value])
         result_eth = run_statement("CALL insert_mkt_eth(?,?,?,?,?,?,?,?,?)", [image_value_eth, ath_value_eth, atl_value_eth, cur_price_value_eth, market_cap_value_eth, market_cap_rank_value_eth, name_value_eth, total_supply_value_eth, total_volume_value_eth])
-        result_usdt = run_statement("CALL insert_mkt_usdt(?,?,?,?,?,?,?,?,?)",[image_value_usdt, ath_value_usdt, atl_value_usdt, cur_price_value_usdt, market_cap_value_usdt, market_cap_rank_value_usdt, name_value_usdt, total_supply_value_usdt, total_volume_value_usdt])
+        result_link = run_statement("CALL insert_mkt_link(?,?,?,?,?,?,?,?,?)",[image_value_link, ath_value_link, atl_value_link, cur_price_value_link, market_cap_value_link, market_cap_rank_value_link, name_value_link, total_supply_value_link, total_volume_value_link])
         result_bnb = run_statement("CALL insert_mkt_bnb(?,?,?,?,?,?,?,?,?)",[image_value_bnb, ath_value_bnb, atl_value_bnb, cur_price_value_bnb, market_cap_value_bnb, market_cap_rank_value_bnb, name_value_bnb, total_supply_value_bnb, total_volume_value_bnb])
         result_ltc = run_statement("CALL insert_mkt_ltc(?,?,?,?,?,?,?,?,?)", [image_value_ltc, ath_value_ltc, atl_value_ltc, cur_price_value_ltc, market_cap_value_ltc, market_cap_rank_value_ltc, name_value_ltc, total_supply_value_ltc, total_volume_value_ltc])
         result_avax = run_statement("CALL insert_mkt_avax(?,?,?,?,?,?,?,?,?)", [image_value_avax, ath_value_avax, atl_value_avax, cur_price_value_avax, market_cap_value_avax, market_cap_rank_value_avax, name_value_avax, total_supply_value_avax, total_volume_value_avax])
@@ -124,7 +124,7 @@ def make_market():
         result_uni = run_statement("CALL insert_mkt_uni(?,?,?,?,?,?,?,?,?)", [image_value_uni, ath_value_uni, atl_value_uni, cur_price_value_uni, market_cap_value_uni, market_cap_rank_value_uni, name_value_uni, total_supply_value_uni, total_volume_value_uni])
         result_sol = run_statement("CALL insert_mkt_sol(?,?,?,?,?,?,?,?,?)", [image_value_sol, ath_value_sol, atl_value_sol, cur_price_value_sol, market_cap_value_sol, market_cap_rank_value_sol, name_value_sol, total_supply_value_sol, total_volume_value_sol])
         result_dot = run_statement("CALL insert_mkt_dot(?,?,?,?,?,?,?,?,?)", [image_value_dot, ath_value_dot, atl_value_dot, cur_price_value_dot, market_cap_value_dot, market_cap_rank_value_dot, name_value_dot, total_supply_value_dot, total_volume_value_dot])
-        if result is None and result_eth is None and result_usdt is None and result_bnb is None and result_ltc is None and result_avax is None and result_matic is None and result_uni is None and result_sol is None and result_dot is None:
+        if result is None and result_eth is None and result_link is None and result_bnb is None and result_ltc is None and result_avax is None and result_matic is None and result_uni is None and result_sol is None and result_dot is None:
             return data
         else:
             return make_response(jsonify(result), 500)

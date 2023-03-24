@@ -7,7 +7,7 @@ import requests
 
 @app.get('/api/portfolio')
 def get_portfolio():
-    keys = ['client_id', 'name', 'quantity', 'purchase_price', 'current_price']
+    keys = ['id','client_id', 'name', 'quantity', 'purchase_price', 'current_price']
     token_input = request.headers.get("token")
     result = run_statement("CALL get_folio_data(?)", [token_input])
     port_alpha = []
@@ -29,7 +29,7 @@ def insert_portfolio():
     name_input = request.json.get('name')
     purchase_price = request.json.get('purchasePrice')
     result_verify = run_statement("CALL check_purc_price(?,?)", [name_input, purchase_price])
-    if result_verify[0][0] == 2:
+    if result_verify[0][0] == 1:
         quantity_input = request.json.get('quantity')
         client_email_input = request.json.get('clientEmail')
         result = run_statement("CALL insert_folio_data(?,?,?,?,?)", [client_id_input, name_input, quantity_input, purchase_price, client_email_input])
@@ -47,15 +47,16 @@ def insert_portfolio():
 
 @app.patch('/api/portfolio')
 def patch_portfolio():
-    required_data = ['portId']
+    required_data = ['portId', 'token']
     check_result = check_data(request.headers, required_data)
     if check_result != None:
         return check_result
+    token_input = request.headers.get("token")
     id_input = request.headers.get("portId")
     name_input = request.json.get('name')
     purchase_price_input = request.json.get('purchasePrice')
     quantity_input = request.json.get('quantity')
-    result = run_statement("CALL edit_folio_data(?,?,?,?)", [id_input, name_input, purchase_price_input, quantity_input])
+    result = run_statement("CALL edit_folio_data(?,?,?,?,?)", [token_input, id_input, name_input, purchase_price_input, quantity_input])
     if result == None:
         return make_response(jsonify("Client info updated successfully"), 200)
     else:
