@@ -4,7 +4,7 @@ from dbhelpers import run_statement
 from validhelpers import check_data
 import json
 import requests
-from datetime import timedelta
+
 
 @app.get('/api/predict')
 def get_predict():
