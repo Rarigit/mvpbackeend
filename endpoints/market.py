@@ -4,15 +4,15 @@ from dbhelpers import run_statement
 from validhelpers import check_data
 import json
 import requests
+import time
 
 
 #BTC endpoint successfully generated to tables via 3rd party api
 # @app.get('/api/market-btc')
 #YES I DID IT. DEBUGGER HELPED SHOW ME THAT I WAS TRYING TO SET THE ALPHA FROM THE BOAT TO A VARIABLE BTC, WHILE INSTEAD IT WAS COMING IN AS DATA. ALWAYS USE DEBUGGER 
-# @app.route('/api/market-btc', methods=['GET'])
+# # @app.route('/api/market-btc', methods=['GET'])
 @app.post('/api/market-coin')
 def make_market():
-    # response = requests.get("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h")
         data = request.get_json()
         # BTC Parameters
         image_value = data.get('image')
@@ -114,6 +114,7 @@ def make_market():
         name_value_dot = data.get('nameDot')
         total_supply_value_dot = data.get('total_supplyDot')
         total_volume_value_dot = data.get('total_volumeDot')
+        
         result = run_statement("CALL test_insert_data_from_gecko(?,?,?,?,?,?,?,?,?)", [image_value, ath_value, atl_value, cur_price_value, market_cap_value, market_cap_rank_value, name_value, total_supply_value, total_volume_value])
         result_eth = run_statement("CALL insert_mkt_eth(?,?,?,?,?,?,?,?,?)", [image_value_eth, ath_value_eth, atl_value_eth, cur_price_value_eth, market_cap_value_eth, market_cap_rank_value_eth, name_value_eth, total_supply_value_eth, total_volume_value_eth])
         result_link = run_statement("CALL insert_mkt_link(?,?,?,?,?,?,?,?,?)",[image_value_link, ath_value_link, atl_value_link, cur_price_value_link, market_cap_value_link, market_cap_rank_value_link, name_value_link, total_supply_value_link, total_volume_value_link])
@@ -129,6 +130,7 @@ def make_market():
         else:
             return make_response(jsonify(result), 500)
 
+
 #Getting lots of failed connections or too many connection errors with my get endpoint
 @app.get('/api/market-coin')
 def get_market():
@@ -141,3 +143,4 @@ def get_market():
         return make_response(jsonify(coin_alpha), 200)
     else:
         return make_response(jsonify(result), 500)
+    
