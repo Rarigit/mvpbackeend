@@ -6,7 +6,7 @@ import requests
 
 
 def update_market_coin():
-    api_url = 'http://127.0.0.1:5000/api/market-coin'
+    api_url = 'http://127.0.0.1:5024/api/market-coin'
     while True:
         try:
             response = requests.get(
