@@ -5,6 +5,11 @@ import time
 import requests
 
 
+#I've used a threading function so that my run.py file can handle both my backend and my bot file within the run file. It works fine in local testing, only issue is that it double post in DB.
+# However, whenever I try and get it online. I run into issues with my VM. PM logs show errors, browser hit 503 Axios errors. Its very frustrating. 
+# Initially I tried and set the bot as as a seperate PM2 instance but that failed as well.
+# I think perhaps the server cannot handle the request load from the api. 
+
 def update_market_coin():
     api_url = 'http://127.0.0.1:5024/api/market-coin'
     while True:
@@ -137,7 +142,7 @@ def update_market_coin():
             time.sleep(60)
         except Exception as e:
             print(f"An error occurred while updating market coin: {e}")
-            time.sleep(60)
+            time.sleep(300)
         
 
 
