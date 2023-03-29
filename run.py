@@ -142,7 +142,7 @@ def update_market_coin():
             time.sleep(60)
         except Exception as e:
             print(f"An error occurred while updating market coin: {e}")
-            time.sleep(300)
+            time.sleep(60)
         
 
 
