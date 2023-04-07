@@ -26,7 +26,7 @@ def update_market_coin():
             matic = data[9]
             uni = data[18]
             sol = data[10]
-            dot = data[12]
+            dot = data[11]
             #BTC json data parse
             image_value = btc.get('image')
             ath_value = btc.get('ath')
