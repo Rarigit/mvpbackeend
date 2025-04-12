@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.5.62, for Win64 (AMD64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 35.223.135.253    Database: mvpfinalo
+-- Host: 35.232.218.35    Database: mvpfinalo
 -- ------------------------------------------------------
--- Server version	5.5.5-10.11.1-MariaDB-1:10.11.1+maria~deb11
+-- Server version	5.5.5-10.11.6-MariaDB-1:10.11.6+maria~deb11
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `client_session`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `client_session` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `client_id` int(10) unsigned NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE `client_session` (
   UNIQUE KEY `client_session_UN_token` (`token`),
   KEY `client_session_FK_user` (`client_id`),
   CONSTRAINT `client_session_FK_user` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `client_session` (
 
 DROP TABLE IF EXISTS `clients`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clients` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(100) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `clients` (
 
 DROP TABLE IF EXISTS `market_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `market_data` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ath` decimal(10,2) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `market_data` (
   `total_volume` bigint(20) unsigned NOT NULL,
   `images` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42501 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6579219 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,7 +83,7 @@ CREATE TABLE `market_data` (
 
 DROP TABLE IF EXISTS `portfolio_tracker`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `portfolio_tracker` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `client_id` int(10) unsigned NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE `portfolio_tracker` (
   CONSTRAINT `portfolio_tracker_FK_email` FOREIGN KEY (`client_email`) REFERENCES `clients` (`email`) ON DELETE CASCADE,
   CONSTRAINT `portfolio_tracker_FK_mktid` FOREIGN KEY (`market_data_id`) REFERENCES `market_data` (`id`) ON DELETE CASCADE,
   CONSTRAINT `portfolio_tracker_FK_user` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `portfolio_tracker` (
 
 DROP TABLE IF EXISTS `predictions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `predictions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `client_id` int(10) unsigned NOT NULL,
@@ -120,12 +120,31 @@ CREATE TABLE `predictions` (
   PRIMARY KEY (`id`),
   KEY `predictions_FK_user` (`client_id`),
   CONSTRAINT `predictions_FK_user` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping routines for database 'mvpfinalo'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `check_double_insert` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'IGNORE_SPACE,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`topdev`@`%` PROCEDURE `check_double_insert`(name CHAR(100))
+BEGIN
+	SELECT * FROM market_data WHERE name = name_value;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `check_purc_price` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -354,9 +373,10 @@ BEGIN
 	END IF;
 
 	CREATE TEMPORARY TABLE temp_table
-	SELECT images, ath, atl, current_price, market_cap, market_cap_rank, name, total_supply, total_volume
+	SELECT DISTINCT images, ath, atl, current_price, market_cap, market_cap_rank, name, total_supply, total_volume
 	FROM market_data
 	WHERE name IN ('Bitcoin', 'Ethereum', 'Chainlink', 'BNB', 'Litecoin', 'Avalanche', 'Polygon', 'Uniswap', 'Solana', 'Polkadot')
+-- 	GROUP BY name
 	ORDER BY id DESC 
 	LIMIT 10;
 
@@ -814,4 +834,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-25 23:14:04
+-- Dump completed on 2025-04-11 19:20:57
